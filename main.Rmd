@@ -17,9 +17,45 @@ library(tidyverse)
 ```
 
 # Introduction:
+We decided to analyze if there is a difference between chaffinch sex and mass.
 
 # Methods:
+We compared the difference between chaffinch sex and mass using RStudio and RMarkdown.
 
 # Results:
 
 # Discussion:
+
+
+
+<!-- # Importing the dataset: -->
+chaff <- read.table("chaff.txt", header = TRUE)
+
+<!-- tidying the data -->
+chaff<- chaff%>% 
+  pivot_longer(names_to = "sex", 
+               values_to = "mass",
+               cols = everything())
+
+file <-  "chaff.txt"
+write.table(chaff, 
+            file, 
+            quote = FALSE,
+            row.names = FALSE)
+
+<!-- Summarising the data: -->
+chaffsummary <- summarySE(chaff, measurevar = "mass", groupvar = "sex")
+
+<!-- calculating the SS(x) of all the mass values: -->
+sum_sq <- function(df, measure, group) {
+  df %>% group_by({{ group }}) %>% 
+    summarise(ss = sum(({{measure}} - mean({{measure}}))^2))
+}
+
+sum_sq(chaff, mass, sex)
+
+
+
+
+
+
