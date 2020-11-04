@@ -43,9 +43,6 @@ write.table(chaff,
             quote = FALSE,
             row.names = FALSE)
 
-<!-- Summarising the data: -->
-chaffsummary <- summarySE(chaff, measurevar = "mass", groupvar = "sex")
-
 <!-- calculating the SS(x) of all the mass values: -->
 sum_sq <- function(df, measure, group) {
   df %>% group_by({{ group }}) %>% 
@@ -53,9 +50,31 @@ sum_sq <- function(df, measure, group) {
 }
 
 sum_sq(chaff, mass, sex)
+<!-- sex        ss -->
+  <!-- <fct>   <dbl> -->
+<!-- 1 females  86.8 -->
+<!-- 2 males    87.9 -->
 
+<!-- Summarising the data: -->
+chaff_summary <- chaff %>% 
+  group_by(sex) %>% 
+  summarise(mean_index = mean(mass),
+            n = length(mass),
+            sd = sd(mass),
+            se = sd/sqrt(n))
 
-
-
+<!-- Creating a summary function: -->
+chaffsummaryfunc <- function(ds, measure, group) {
+  chaff %>% group_by(sex) %>% 
+  summarise(mean_mass = mean(mass),
+            n = length(mass),
+            sd = sd(mass),
+            se = sd/sqrt(n))
+}
+chaffsummaryfunc(chaff, mass, sex)
+ <!-- sex     mean_mass     n    sd    se -->
+  <!-- <fct>       <dbl> <int> <dbl> <dbl> -->
+<!-- 1 females      20.5    20  2.14 0.478 -->
+<!-- 2 males        22.3    20  2.15 0.481 -->
 
 
