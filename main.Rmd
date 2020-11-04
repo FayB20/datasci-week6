@@ -62,6 +62,7 @@ chaff_summary <- chaff %>%
             n = length(mass),
             sd = sd(mass),
             se = sd/sqrt(n))
+<<<<<<< HEAD
 
 <!-- Creating a summary function: -->
 chaffsummaryfunc <- function(ds, measure, group) {
@@ -76,5 +77,7 @@ chaffsummaryfunc(chaff, mass, sex)
   <!-- <fct>       <dbl> <int> <dbl> <dbl> -->
 <!-- 1 females      20.5    20  2.14 0.478 -->
 <!-- 2 males        22.3    20  2.15 0.481 -->
+=======
+>>>>>>> 9d5a618cbd2ea2fdebb5660cd6bd4650313ae6da
 
 
